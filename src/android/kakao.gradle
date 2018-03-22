@@ -1,0 +1,24 @@
+repositories {
+	mavenCentral()
+    maven { url 'http://devrepo.kakao.com:8088/nexus/content/groups/public/' }
+}
+
+dependencies {
+    // 카카오 로그인 sdk를 사용하기 위해 필요.
+    compile group: 'com.kakao.sdk', name: 'usermgmt', version: project.1.9.0
+
+    // 카카오링크 sdk를 사용하기 위해 필요.
+    compile group: 'com.kakao.sdk', name: 'kakaolink', version: project.1.9.0
+
+    // 카카오톡 sdk를 사용하기 위해 필요.
+    compile group: 'com.kakao.sdk', name: 'kakaotalk', version: project.1.9.0
+
+    // 카카오내비 sdk를 사용하기 위해 필요.
+    compile group: 'com.kakao.sdk', name: 'kakaonavi', version: project.1.9.0
+
+    // 카카오스토리 sdk를 사용하기 위해 필요.
+    compile group: 'com.kakao.sdk', name: 'kakaostory', version: project.1.9.0
+
+    // push sdk를 사용하기 위해 필요.
+    compile group: 'com.kakao.sdk', name: 'push', version: project.1.9.0
+}

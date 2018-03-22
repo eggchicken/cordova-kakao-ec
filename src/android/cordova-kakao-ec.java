@@ -7,18 +7,33 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import pe.eggchicken.cordova.plugin.kakao.KakaoServices;
+
 /**
  * This class echoes a string called from JavaScript.
  */
 public class cordova-kakao-ec extends CordovaPlugin {
+    public KakaoService kakao;
+
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        // your init code here
+        kakao = new KakaoService();
+    }
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-        if (action.equals("coolMethod")) {
-            String message = args.getString(0);
-            this.coolMethod(message, callbackContext);
+
+        if ("sendTemplate".equals(action)) {
+            kakao.sendTemplate();
             return true;
         }
+        // if (action.equals("coolMethod")) {
+        //     String message = args.getString(0);
+        //     this.coolMethod(message, callbackContext);
+        //     return true;
+        // }
         return false;
     }
 
