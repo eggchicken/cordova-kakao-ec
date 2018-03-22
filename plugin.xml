@@ -1,11 +1,14 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="pe.eggchicken.cordova.plugin.kakao" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<plugin id="pe.eggchicken.cordova.plugin.kakao"
+    version="1.0.0"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <name>cordova-kakao-ec</name>
     <js-module name="cordova-kakao-ec" src="www/cordova-kakao-ec.js">
         <clobbers target="cordova.plugins.cordova-kakao-ec"/>
     </js-module>
 
-    <preference name="KAKAO_APP_KEY" />
+    <preference name="KAKAO_APP_KEY" default="default-value"/>
 
     <platform name="android">
         <config-file parent="/*" target="res/xml/config.xml">
