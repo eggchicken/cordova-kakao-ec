@@ -1,0 +1,25 @@
+{
+  "name": "pe.eggchicken.cordova.plugin.kakao",
+  "version": "0.0.1",
+  "description": "kakao plugin for cordova",
+  "cordova": {
+    "id": "pe.eggchicken.cordova.plugin.kakao",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eggchicken/cordova-kakao-ec.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "eggchicken",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/eggchicken/cordova-kakao-ec/issues"
+  },
+  "homepage": "https://github.com/eggchicken/cordova-kakao-ec#readme"
+}
