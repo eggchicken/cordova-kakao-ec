@@ -1,5 +1,5 @@
 {
-  "name": "pe.eggchicken.cordova.plugin.kakao",
+  "name": "cordova-kakao-ec",
   "version": "0.0.1",
   "description": "kakao plugin for cordova",
   "cordova": {

@@ -1,34 +1,42 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="pe.eggchicken.cordova.plugin.kakao"
+<plugin id="cordova-kakao-ec"
     version="1.0.0"
     xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <name>cordova-kakao-ec</name>
-    <js-module name="cordova-kakao-ec" src="www/cordova-kakao-ec.js">
-        <clobbers target="cordova.plugins.cordova-kakao-ec"/>
+    <js-module name="Kakao" src="www/cordova-kakao-ec.js">
+        <clobbers target="Kakao"/>
     </js-module>
 
-    <preference name="KAKAO_APP_KEY" default="default-value"/>
 
+    <preference name="API_KEY" default="default-value"/>
     <platform name="android">
+
         <config-file parent="/*" target="res/xml/config.xml">
-            <feature name="cordova-kakao-ec">
+            <feature name="Kakao">
                 <param name="android-package"
-                    value="pe.eggchicken.cordova.plugin.kakao.cordova-kakao-ec"/>
+                    value="pe.eggchicken.cordova.plugin.kakao.KakaoPlugin"/>
             </feature>
         </config-file>
 
-        <config-file parent="/*" target="src/main/res/value/kakao_strings.xml">
-            <resources>
-                <string name="kakao_app_key">$KAKAO_APP_KEY</string>
-                <string name="kakao_scheme">kakao$KAKAO_APP_KEY</string>
+        <config-file target="./res/values/strings.xml" parent="/*">
+                <string name="kakao_app_key">$API_KEY</string>
+                <string name="kakao_scheme">kakao$API_KEY</string>
                 <string name="kakaolink_host">kakaolink</string>
-            </resources>
         </config-file>
-
         <!-- Kakao AndroidManifest 1 -->
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.INTERNET" />
+        </config-file>
+        <!-- Kakao AndroidManifest 2 -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity
+                android:name=".SampleLoginActivity">
+                <intent-filter>
+                    <action android:name="android.intent.action.MAIN" />
+                    <category android:name="android.intent.category.LAUNCHER" />
+                </intent-filter>
+            </activity>
         </config-file>
         <!-- Kakao AndroidManifest 3 -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -52,19 +60,23 @@
         </config-file>
         <!-- Kakao link Manifest Setting -->
         <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <intent-filter>
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                    <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="@string/kakao_scheme"
-                        android:host="@string/kakaolink_host" />
-            </intent-filter>
+                    <data android:scheme="@string/kakao_scheme"
+                            android:host="@string/kakaolink_host" />
+                </intent-filter>
         </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data
+                android:name="com.kakao.sdk.AppKey"
+                android:value="@string/kakao_app_key" />
+        </config-file>
+        <source-file src="src/android/KakaoPlugin.java"
+            target-dir="src/pe/eggchicken/cordova/plugin/kakao"/>
 
-        <source-file src="src/android/cordova-kakao-ec.java"
-            target-dir="src/pe/eggchicken/cordova/plugin/kakao/cordova-kakao-ec"/>
-
-        <framework src="src/android/kakao.gradle" custom="true" type="gradleReference" />
+        <framework src="kakao-plugin.gradle" custom="true" type="gradleReference" />
     </platform>
 </plugin>
