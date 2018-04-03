@@ -1,8 +1,8 @@
 var exec = require('cordova/exec');
 
 var Kakao = {
-    sendTemplate: function (success, error, arg) {
-        exec(success, error, 'Kakao', 'sendTemplate', arg);
+    sendTemplate: function (arg0, success, error) {
+        exec(success, error, 'Kakao', 'sendTemplate', [arg0]);
     }
 }
 

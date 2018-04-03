@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <name>cordova-kakao-ec</name>
     <js-module name="Kakao" src="www/cordova-kakao-ec.js">
-        <clobbers target="Kakao"/>
+        <clobbers target="navigator.Kakao"/>
     </js-module>
 
 

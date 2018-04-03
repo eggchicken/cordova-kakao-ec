@@ -17,21 +17,14 @@ import com.kakao.message.template.*;
 import com.kakao.network.callback.ResponseCallback;
 import com.kakao.network.ErrorResult;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import java.security.MessageDigest;
-import android.util.Base64;
-import java.security.NoSuchAlgorithmException;
-import android.content.pm.PackageManager.NameNotFoundException;
 /**
  * This class echoes a string called from JavaScript.
  */
 public class KakaoPlugin extends CordovaPlugin {
-    public boolean execute(String action, JSONObject args, CallbackContext callbackContext) throws JSONException {
-
+    @Override
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("sendTemplate")) {
-            this.sendTemplate(args);
+            this.sendTemplate(args, callbackContext);
             return true;
         }
         // if (action.equals("coolMethod")) {
@@ -50,13 +43,13 @@ public class KakaoPlugin extends CordovaPlugin {
         }
     }
 
-    public void sendTemplate(JSONObject args) {
+    public void sendTemplate(JSONArray args, CallbackContext callbackContext) {
         Context context = this.cordova.getActivity().getApplicationContext();
-
         try {
-            JSONObject content = args.getJSONObject("content");
+            JSONObject convertArgs = args.getJSONObject(0);
+            JSONObject content = convertArgs.getJSONObject("content");
             JSONObject link = content.getJSONObject("link");
-            JSONObject social = args.getJSONObject("social");
+            JSONObject social = convertArgs.getJSONObject("social");
 
             String title = content.getString("title");
             String description = content.getString("description");
@@ -74,7 +67,7 @@ public class KakaoPlugin extends CordovaPlugin {
                     imageSrc,
                     LinkObject.newBuilder().setWebUrl(webUrl)
                     .setMobileWebUrl(mobileWebUrl).build())
-            .setDescrption(description.substring(0,25))
+            .setDescrption(description)
             .build())
             .setSocial(SocialObject.newBuilder().setLikeCount(likeCount).setCommentCount(commentCount)
                     .setSharedCount(1).setViewCount(2).build())
@@ -90,39 +83,18 @@ public class KakaoPlugin extends CordovaPlugin {
             KakaoLinkService.getInstance().sendDefault(context, params, new ResponseCallback<KakaoLinkResponse>() {
                 @Override
                 public void onFailure(ErrorResult errorResult) {
-                    Log.d("KakaoPlugin", errorResult.toString());
+                    callbackContext.error("Expected one non-empty string argument.");
                 }
 
                 @Override
                 public void onSuccess(KakaoLinkResponse result) {
-                    Log.d("KakaoPlugin", "Success");
+                    callbackContext.success("KakaoPluginOK");
                 }
             });
         } catch(JSONException e) {
-            Log.d("KakaoPlugin", "json error" + e);
+            Log.d("kakao plugin error: ", + e);
         }
 
     }
 
-    public static String getKeyHash(final Context context) {
-        PackageManager pm = context.getPackageManager();
-        try{
-            PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
-            if (packageInfo == null)
-            return null;
-
-            for (Signature signature : packageInfo.signatures) {
-                try {
-                    MessageDigest md = MessageDigest.getInstance("SHA");
-                    md.update(signature.toByteArray());
-                    return Base64.encodeToString(md.digest(), Base64.NO_WRAP);
-                } catch (NoSuchAlgorithmException e) {
-                    Log.w("KakaoPlugin", "Unable to get MessageDigest. signature=" + signature, e);
-                }
-            }
-        } catch(NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }
