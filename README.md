@@ -28,6 +28,6 @@ Signing Keystore:
 Android Build
 
 
-UninstallL
+Uninstall:
 
     plugman uninstall --platform android --project .\platforms\android --plugin cordova-kakao-ec
